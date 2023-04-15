@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//Unikalne ID dla kazdej osoby w pliku
 int ID = 0;
 
 void remove_contact()
@@ -31,6 +32,7 @@ void remove_contact()
 
 	printf("\n\nID przed usunieciem: %i", ID);
 
+//Przesuwamy dane w pliku po usunieciu osoby np: 1,2,3 rm 2 -> 1,3 ale 3 maa teraz ID 2 więc dane z ID 3 sa nadpisywane na miejsce 2.
 	for (iremove; iremove < ID; iremove++)
 	{
 
@@ -50,7 +52,7 @@ void save_to_file_all()
 {
 	//ID_check();
 
-	int numer = 0;
+	
 	FILE* plik;
 	plik = fopen("Kontakty.txt", "w");
 
@@ -60,6 +62,7 @@ void save_to_file_all()
 		return;
 	}
 
+	int numer = 0;
 	//wpisujemy wszystkie osoby do pliku
 	for (numer; numer < ID; numer++)
 	{
@@ -71,7 +74,7 @@ void save_to_file_all()
 	fclose(plik);
 }
 
-//Dodajemy nowy kontakt
+//Dodajemy nowy kontakt, przekazujemy dane jakie ma wpisac do pliku
 void nowy_kontakt(int wiekk, char* imiee, char* nazwiskoo, char* ulicaa, char* nr_domuu, char* nr_mieszkaniaa, char* kod_pocztowyy,
 	char* miastoo, char* nr_telefonuu, char* zapasowy_nr_telefonuu)
 {
@@ -101,6 +104,8 @@ void nowy_kontakt(int wiekk, char* imiee, char* nazwiskoo, char* ulicaa, char* n
 
 	strncpy(kontakty[ID].zapasowy_nr_telefonu, zapasowy_nr_telefonuu, MAX_DLUGOSC);
 
+	//zmieniamy wskaznik na nastepny element listy, jesli jest jedna osoba, bo ID jest zawsze o 1 wieksze, to ustawiamy na null
+	//W przeciwnym wypadku element poprzedni wskazuje na aktualny
 	if(ID == 0)
 	kontakty[ID].next = NULL;
 	else
@@ -109,6 +114,7 @@ void nowy_kontakt(int wiekk, char* imiee, char* nazwiskoo, char* ulicaa, char* n
 		kontakty[ID].next = NULL;
 	}
 	
+	//wpisywanie danych osoby do pliku
 	fprintf(plik, "ID: %d \n %i, %s %s \n %s %s %s \n %s %s \n %s %s \n\n", kontakty[ID].id, kontakty[ID].wiek, kontakty[ID].imie
 		, kontakty[ID].nazwisko, kontakty[ID].ulica, kontakty[ID].nr_domu, kontakty[ID].nr_mieszkania, kontakty[ID].kod_pocztowy
 		, kontakty[ID].miasto, kontakty[ID].nr_telefonu, kontakty[ID].zapasowy_nr_telefonu);
@@ -233,7 +239,7 @@ void menu()
 				puts("Podaj prawidlowa liczbe indeksu!");
 				break;
 			}
-
+			//wyswietlamy osoby o podanym ID
 			puts("");
 			printf("ID: %i \n %i, %s %s \n %s %s %s \n %s %s \n %s %s \n\n", kontakty[idDoWyswietlenia].id, kontakty[idDoWyswietlenia].wiek, kontakty[idDoWyswietlenia].imie
 				, kontakty[idDoWyswietlenia].nazwisko, kontakty[idDoWyswietlenia].ulica, kontakty[idDoWyswietlenia].nr_domu, kontakty[idDoWyswietlenia].nr_mieszkania, kontakty[idDoWyswietlenia].kod_pocztowy
@@ -258,7 +264,7 @@ void menu()
 				puts("Podaj prawidlowa liczbe indeksu!");
 				break;
 			}
-
+			//wyswietlaamy dane osob od podanego ID w gore
 			for (odId; odId < ID; odId++)
 			{
 				printf("\nID: %i \n %i, %s %s \n %s %s %s \n %s %s \n %s %s \n\n", kontakty[odId].id, kontakty[odId].wiek, kontakty[odId].imie
@@ -275,7 +281,7 @@ void menu()
 
 }
 
-//Funkcja w Becie, bedzie potrzebna w dalszej czesci projektu
+//Funkcja w Becie, będzie potrzebna w dalszej czesci projektu
 void ID_check()
 {
 	FILE* plik;
