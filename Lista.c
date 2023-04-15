@@ -101,7 +101,14 @@ void nowy_kontakt(int wiekk, char* imiee, char* nazwiskoo, char* ulicaa, char* n
 
 	strncpy(kontakty[ID].zapasowy_nr_telefonu, zapasowy_nr_telefonuu, MAX_DLUGOSC);
 
+	if(ID == 0)
 	kontakty[ID].next = NULL;
+	else
+	{
+		kontakty[ID - 1].next = &kontakty[ID];
+		kontakty[ID].next = NULL;
+	}
+	
 	fprintf(plik, "ID: %d \n %i, %s %s \n %s %s %s \n %s %s \n %s %s \n\n", kontakty[ID].id, kontakty[ID].wiek, kontakty[ID].imie
 		, kontakty[ID].nazwisko, kontakty[ID].ulica, kontakty[ID].nr_domu, kontakty[ID].nr_mieszkania, kontakty[ID].kod_pocztowy
 		, kontakty[ID].miasto, kontakty[ID].nr_telefonu, kontakty[ID].zapasowy_nr_telefonu);
