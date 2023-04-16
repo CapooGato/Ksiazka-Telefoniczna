@@ -1,0 +1,24 @@
+ID: 0 
+ 19, Damian Karwat 
+ Fajna 62B 0 
+ 26-065 Pieksozow 
+ 888111444 111000222 
+
+ID: 1 
+ 20, Seweryn Kawecki 
+ Fajna 62B 0 
+ 26-065 Pieksozow 
+ 999888111 111000222 
+
+ID: 2 
+ 19, Magda Gesler 
+ Fajna 62B 0 
+ 26-065 Pieksozow 
+ 999111888 000999888 
+
+ID: 3 
+ 20, Kapitan Tytus 
+ Nie_Fajna 62B 0 
+ 26-065 Pieksozow 
+ 222333444 555666777 
+
