@@ -2,8 +2,6 @@
 #include<stdlib.h>
 #include<string.h>
 #include "Lista.h"
-#include <allegro5/allegro5.h>
-#include "Ulatwienie_sobie_zycia_allegro.h"
 
 /*Z racji, ze Visual Studio, nie jest stworzone dla jezyka C, tylko dla C++, wystepuja warningi, bledy z tym zwiazne, najczesciej dotycza one naruszenia dostepu.
 Mozliwe jest, ze bedzie potrzeba dodania "_CRT_SECURE_NO_WARNINGS", bez "" w: projekt -> Wlasciwosci -> C/C++ -> Preprocesor -> Definicje Preprocesora -> Lewy przycisk -> 
@@ -22,8 +20,5 @@ int main(int argc, int **argv)
 	//Menu
 	menu();
 
-	/*Zabawa z dzialaniem allegro, ktore jest na drugi kamien milowy*/
-	//inicjalizacja_allegro(); 
-	//Ekran_glowny();
 	return 0;
 }
