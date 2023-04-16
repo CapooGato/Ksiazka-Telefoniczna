@@ -1,0 +1,4 @@
+﻿  Main.c
+LINK : warning LNK4044: nierozpoznana opcja „/lallegro-5.0”; zignorowano
+LINK : warning LNK4044: nierozpoznana opcja "/lallegro-5.0"; zignorowano
+  Ksiazka_telefoniczna.vcxproj -> C:\Users\Seweryn\source\repos\Ksiazka_telefoniczna\x64\Debug\Ksiazka_telefoniczna.exe
