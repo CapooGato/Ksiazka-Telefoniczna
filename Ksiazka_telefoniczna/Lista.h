@@ -1,7 +1,7 @@
 #pragma once
 
 #define MAX_DLUGOSC 25
-#define MAX_KONTAKTOW 10
+#define MAX_KONTAKTOW 50
 typedef struct {
 	int id, wiek;
 	char imie[MAX_DLUGOSC];
@@ -27,3 +27,5 @@ void nowy_kontakt(int wiekk, char* imiee, char* nazwiskoo, char* ulicaa, char* n
 	char* miastoo, char* nr_telefonuu, char* zapasowy_nr_telefonuu);
 void menu();
 void ID_check();
+void dodajKontakt();
+void odczytZPliku();
