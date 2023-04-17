@@ -8,15 +8,16 @@ Mozliwe jest, ze bedzie potrzeba dodania "_CRT_SECURE_NO_WARNINGS", bez "" w: pr
 -> edytuj -> definicje preprocesora -> wpisac:  _CRT_SECURE_NO_WARNINGS  */
 int main(int argc, int** argv)
 {
-
+	
 	nowy_kontakt(19, "Damian", "Karwat", "Fajna", "62B", "0", "26-065", "Pieksozow", "888111444", "111000222");
 
 	nowy_kontakt(20, "Seweryn", "Kawecki", "Fajna", "62B", "0", "26-065", "Pieksozow", "999888111", "111000222");
-
+	
 	nowy_kontakt(19, "Magda", "Gesler", "Fajna", "62B", "0", "26-065", "Pieksozow", "999111888", "000999888");
 	nowy_kontakt(20, "Kapitan", "Tytus", "Nie_Fajna", "62B", "0", "26-065", "Pieksozow", "222333444", "555666777");
 	save_to_file_all();
-
+	
+	//odczytZPliku();
 	menu();
 
 
