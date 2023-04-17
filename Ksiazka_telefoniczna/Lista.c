@@ -6,9 +6,10 @@ int ID = 0;
 
 void remove_contact()
 {
-	//ID_check();
+	odczytZPliku();
 
-
+	printf("\n\nID z remboe contacst: %d", ID);
+	printf("\n\nZ remove contacts id 1 %s", kontakty[1].imie);
 	printf("\n\nID w remove contacts: %d", ID);
 	if (ID < 0)
 	{
@@ -22,7 +23,7 @@ void remove_contact()
 
 
 	/*Fix bledu gdzie, remove 3 moglo usuwac index o wartosci 3, jak i potem 2*/
-	if (iremove < 0 || iremove >ID)
+	if (iremove < 0 || iremove >=ID)
 	{
 		puts("Podaj prawidlowa liczbe indeksu!");
 		return;
@@ -31,42 +32,87 @@ void remove_contact()
 
 	printf("\n\nID przed usunieciem: %i", ID);
 
-	for (iremove; iremove < ID; iremove++)
+	//!
+	for (iremove; iremove < ID-1; iremove++)
 	{
-
+		
 		kontakty[iremove] = kontakty[iremove + 1];
 		kontakty[iremove].id--;
 	}
 
 	ID--;
-
-	printf("\n\nID Po usunieciu: %i", ID);
+	printf("\n\nID Po usunieciu: %d", ID);
 	save_to_file_all();
 }
 
-
-//Wpisujemy nowe osoby 
-void save_to_file_all()
+void odczytZPliku()
 {
-	//ID_check();
-
-	int numer = 0;
 	FILE* plik;
-	plik = fopen("Kontakty.txt", "w");
-
+	plik = fopen("Kontakty.txt", "r");
 	if (!plik)
 	{
 		printf("\nBlad otwarcia pliku!");
 		return;
 	}
 
+	
+	//odczytujemy najwyzsze id z pliku
+	int id = 0;
+	char linia[100];
+	while (fgets(linia, sizeof(linia), plik) != NULL) {
+		if (sscanf(linia, "ID: %d", &id) == 1) {
+			
+			id++;		
+		}
+	}
+	ID = id;
+
+	rewind(plik);
+	int iplikPobierz = 0;
+	while ((fscanf(plik, "ID: %d", &kontakty[iplikPobierz].id) == 1)) {
+		 
+		fscanf(plik, "ID: %d\n", &kontakty[iplikPobierz].id);
+		fscanf(plik, " %d, %s %s\n", &kontakty[iplikPobierz].wiek, &kontakty[iplikPobierz].imie, &kontakty[iplikPobierz].nazwisko);
+		fscanf(plik, " %s %s %s\n", &kontakty[iplikPobierz].ulica, &kontakty[iplikPobierz].nr_domu, &kontakty[iplikPobierz].nr_mieszkania);
+		fscanf(plik, " %s %s\n", &kontakty[iplikPobierz].kod_pocztowy, &kontakty[iplikPobierz].miasto);
+		fscanf(plik, " %s %s\n\n", &kontakty[iplikPobierz].nr_telefonu, &kontakty[iplikPobierz].zapasowy_nr_telefonu);
+			
+     	iplikPobierz++;
+		
+		
+	}
+
+	fclose(plik);
+}
+
+//Wpisujemy nowe osoby 
+void save_to_file_all()
+{
+	//odczytZPliku();
+	
+	
+	FILE* plik;
+	plik = fopen("Kontakty.txt", "w");
+	
+	if (!plik)
+	{
+		printf("\nBlad otwarcia pliku!");
+		return;
+	}
+	rewind(plik);
+
+	printf("\n\nSave to all ID: %d", ID);
 	//wpisujemy wszystkie osoby do pliku
+	int numer = 0;
 	for (numer; numer < ID; numer++)
 	{
 		fprintf(plik, "ID: %i \n %i, %s %s \n %s %s %s \n %s %s \n %s %s \n\n", kontakty[numer].id, kontakty[numer].wiek, kontakty[numer].imie
 			, kontakty[numer].nazwisko, kontakty[numer].ulica, kontakty[numer].nr_domu, kontakty[numer].nr_mieszkania, kontakty[numer].kod_pocztowy
 			, kontakty[numer].miasto, kontakty[numer].nr_telefonu, kontakty[numer].zapasowy_nr_telefonu);
+
+		
 	}
+
 
 	fclose(plik);
 }
@@ -76,13 +122,13 @@ void nowy_kontakt(int wiekk, char* imiee, char* nazwiskoo, char* ulicaa, char* n
 	char* miastoo, char* nr_telefonuu, char* zapasowy_nr_telefonuu)
 {
 
-	//ID_check();
+	odczytZPliku();
 	FILE* plik;
 	plik = fopen("Kontakty.txt", "a+");
 	kontakty[ID].id = ID;
 	kontakty[ID].wiek = wiekk;
-	printf("\n\n\n DOpisz do pliku ID = %i", ID);
-	// printf("\n\n\n DOpisz do pliku id = %i", id);
+	printf("\n\n\n Nowy kontakt ID = %d", ID);
+
 	strncpy(kontakty[ID].imie, imiee, MAX_DLUGOSC);
 
 	strncpy(kontakty[ID].nazwisko, nazwiskoo, MAX_DLUGOSC);
@@ -117,9 +163,31 @@ void nowy_kontakt(int wiekk, char* imiee, char* nazwiskoo, char* ulicaa, char* n
 	fclose(plik);
 	puts("\nPomyslnie dodano do pliku.\n");
 
-	save_to_file_all();
+	//save_to_file_all();
 }
 
+void dodajKontakt()
+{
+	if (ID >= MAX_KONTAKTOW) {
+		puts("\n\nPrzekorczono dozwolona ilosc kontaktow!");
+		return;
+	}
+
+	char im[MAX_DLUGOSC], nazw[MAX_DLUGOSC], ul[MAX_DLUGOSC], dom[MAX_DLUGOSC], mieszk[MAX_DLUGOSC], poczt[MAX_DLUGOSC],
+		miast[MAX_DLUGOSC], tel[MAX_DLUGOSC], zaptel[MAX_DLUGOSC];
+	int wi;
+	printf("\nWiek: "); scanf("%i", &wi);
+	printf("\nImie: "); scanf("%s", im);
+	printf("\nNazwisko: "); scanf("%s", nazw);
+	printf("\nUlica: "); scanf("%s", ul);
+	printf("\nNr domu: "); scanf("%s", dom);
+	printf("\nNr Mieszkania: "); scanf("%s", mieszk);
+	printf("\nNr Poczty: "); scanf("%s", poczt);
+	printf("\nMiasto: "); scanf("%s", miast);
+	printf("\nNr telefonu: "); scanf("%s", tel);
+	printf("\nZapasowy nr telefonu: "); scanf("%s", zaptel);
+	nowy_kontakt(wi, im, nazw, ul, dom, mieszk, poczt, miast, tel, zaptel);
+}
 //Menu z wyobrem co chcemy zrobic
 void menu()
 {
@@ -134,26 +202,7 @@ void menu()
 		{
 		case 1:
 		{
-
-			if (ID >= MAX_KONTAKTOW) {
-				puts("\n\nPrzekorczono dozwolona ilosc kontaktow!");
-				break;
-			}
-
-			char im[MAX_DLUGOSC], nazw[MAX_DLUGOSC], ul[MAX_DLUGOSC], dom[MAX_DLUGOSC], mieszk[MAX_DLUGOSC], poczt[MAX_DLUGOSC],
-				miast[MAX_DLUGOSC], tel[MAX_DLUGOSC], zaptel[MAX_DLUGOSC];
-			int wi;
-			printf("\nWiek: "); scanf("%i", &wi);
-			printf("\nImie: "); scanf("%s", im);
-			printf("\nNazwisko: "); scanf("%s", nazw);
-			printf("\nUlica: "); scanf("%s", ul);
-			printf("\nNr domu: "); scanf("%s", dom);
-			printf("\nNr Mieszkania: "); scanf("%s", mieszk);
-			printf("\nNr Poczty: "); scanf("%s", poczt);
-			printf("\nMiasto: "); scanf("%s", miast);
-			printf("\nNr telefonu: "); scanf("%s", tel);
-			printf("\nZapasowy nr telefonu: "); scanf("%s", zaptel);
-			nowy_kontakt(wi, im, nazw, ul, dom, mieszk, poczt, miast, tel, zaptel);
+			dodajKontakt();
 			break;
 		}
 		case 2:
