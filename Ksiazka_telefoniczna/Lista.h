@@ -4,6 +4,7 @@
 #define MAX_KONTAKTOW 100
 #define MAX_DLUGOSC_TELEFON 13	//Ostatni znak to \0, w chinach np numery maja 11 cyfr
 
+
 typedef struct {
 	int id, wiek;
 	char imie[MAX_DLUGOSC];
@@ -20,6 +21,19 @@ typedef struct {
 }Kontakty;
 
 Kontakty kontakty[MAX_KONTAKTOW];
+
+//Makro = Template jak w C++
+#define SWAP_K(A ,B)	 \
+do							 \
+{						     \
+	  Kontakty tmpkontakt = *(A);	 \
+ 	  *(A) = *(B);				 \
+      *(B) = tmpkontakt;		 \
+       int tmpID = (A)->id;     \
+       (A)->id = (B)->id;          \
+       (B)->id = tmpID;         \
+       save_to_file_all();   \
+}while (0)
 
 extern int ID;
 
