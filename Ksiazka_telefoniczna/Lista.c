@@ -447,17 +447,17 @@ void sort()
 
 
 //Swapujemy struktury ze soba
-void swapK(Kontakty* A, Kontakty* B)
-{
-	Kontakty tmpkontakt = *A;
-	*A = *B;
-	*B = tmpkontakt;
-
-	int tmpID = A->id;
-	A->id = B->id;
-	B->id = tmpID;
-	save_to_file_all();
-}
+//void swapK(Kontakty* A, Kontakty* B)
+//{
+//	Kontakty tmpkontakt = *A;
+//	*A = *B;
+//	*B = tmpkontakt;
+//
+//	int tmpID = A->id;
+//	A->id = B->id;
+//	B->id = tmpID;
+//	save_to_file_all();
+//}
 
 //Ponizej funkcje porownujace pojedyncze dane ze struktur
 short porownanieWiek(Kontakty* A, Kontakty* B, int rosnaco)
@@ -569,7 +569,8 @@ void bobmbelekSort(short(*porownanie)(Kontakty*, Kontakty*, int), int rosnaco)
 			if (porownanie(&kontakty[i], &kontakty[i + 1], rosnaco) == 1 || porownanie(&kontakty[i], &kontakty[i + 1], rosnaco) == 0)
 			{
 				swapped = true;
-				swapK(&kontakty[i], &kontakty[i + 1]);
+				//swapK(&kontakty[i], &kontakty[i + 1]);
+				SWAP_K(&kontakty[i], &kontakty[i + 1]);
 			}
 		}
 		if (!swapped)
