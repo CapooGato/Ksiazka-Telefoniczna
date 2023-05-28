@@ -8,6 +8,7 @@ Mozliwe jest, ze bedzie potrzeba dodania "_CRT_SECURE_NO_WARNINGS", bez "" w: pr
 -> edytuj -> definicje preprocesora -> wpisac:  _CRT_SECURE_NO_WARNINGS  */
 int main(int argc, int** argv)
 {
+
 	//
 	//nowy_kontakt(19, "D", "Karwat", "Fajna", "62B", "0", "26-065", "Pieksozow", "888111444", "111000222");
 
@@ -17,7 +18,7 @@ int main(int argc, int** argv)
 
  //   nowy_kontakt(20, "Kapitan", "Tytus", "Nie_Fajna", "62B", "0", "26-065", "Pieksozow", "222333444", "555666777");
 
-//	odczytZPliku();
+
 	menu();
 
 	return 0;
