@@ -10,40 +10,42 @@ int ID = 0;
 //Menu z wyborem funkcji
 void menu()
 {
+	
+	kontakty = (Kontakty*)malloc(sizeof(Kontakty) * 5);
+
 	int wybor;
 
 	do {
 		printf("\n 0 = zakoncz,\n 1 = dodaj nowa osobe do ksiazki telefonicznej,\n 2 = usun kontakt po ID,\n 3 = Edytuj kontakt\n"
 			" 4 = wyswietl dane kontaktu po ID\n 5 = wyswietl od konkretnego ID,\n 6 = Sortowanie \nWybor: ");
 		scanf("%i", &wybor);
-
 		switch (wybor)
 		{
-			case 1:
-			{
-				dodajKontakt();	break;		
-			}
-			case 2:
-			{
-				remove_contact(); break;
-				
-			}
-			case 3:
-			{	
-				edytujKontakt(); break;				
-			}
-			case 4:
-			{
-				wyswietlKontakt(); break;			
-			}
-			case 5:
-			{
-				wyswietlOd_konkretnegoID(); break;				
-			}
-			case 6:
-			{
-				sort();	break;				
-			}
+		case 1:
+		{
+			dodajKontakt();	break;
+		}
+		case 2:
+		{
+			remove_contact(); break;
+
+		}
+		case 3:
+		{
+			edytujKontakt(); break;
+		}
+		case 4:
+		{
+			wyswietlKontakt(); break;
+		}
+		case 5:
+		{
+			wyswietlOd_konkretnegoID(); break;
+		}
+		case 6:
+		{
+			sort();	break;
+		}
 		}
 
 	} while (wybor != 0);
@@ -55,7 +57,7 @@ void save_to_file_all()
 	//Plik ottwarty w trybie nadpisywania
 	FILE* plik;
 	plik = fopen("Kontakty.txt", "w");
-	
+
 	if (!plik)
 	{
 		printf("\nBlad otwarcia pliku!");
@@ -71,7 +73,7 @@ void save_to_file_all()
 	{
 		fprintf(plik, "ID: %i \n %i, %s %s \n %s %s %s \n %s %s \n %s %s \n\n", kontakty[numer].id, kontakty[numer].wiek, kontakty[numer].imie
 			, kontakty[numer].nazwisko, kontakty[numer].ulica, kontakty[numer].nr_domu, kontakty[numer].nr_mieszkania, kontakty[numer].kod_pocztowy
-			, kontakty[numer].miasto, kontakty[numer].nr_telefonu, kontakty[numer].zapasowy_nr_telefonu);	
+			, kontakty[numer].miasto, kontakty[numer].nr_telefonu, kontakty[numer].zapasowy_nr_telefonu);
 	}
 	fclose(plik);
 }
@@ -127,8 +129,6 @@ void nowy_kontakt(int wiekk, char* imiee, char* nazwiskoo, char* ulicaa, char* n
 
 void remove_contact()
 {
-	odczytZPliku();
-
 	//Jesli ID jest mniejsze od 0 to znaczy ze plik jest pusty
 	if (ID < 0)
 	{
@@ -138,7 +138,7 @@ void remove_contact()
 
 	int iremove = 0;
 	printf("\nPodaj ID osoby ktora chcesz usunac: ");
-	scanf("%i", &iremove);
+	scanf("%d", &iremove);
 
 	/*Fix bledu gdzie, remove 3 moglo usuwac index o wartosci 3, jak i potem 2*/
 	if (iremove < 0 || iremove >= ID)
@@ -147,7 +147,7 @@ void remove_contact()
 		return;
 	}
 
-	//Przy 
+ 
 	for (iremove; iremove < ID - 1; iremove++)
 	{
 		kontakty[iremove] = kontakty[iremove + 1];
@@ -163,11 +163,12 @@ void remove_contact()
 
 void dodajKontakt()
 {
-	if (ID >= MAX_KONTAKTOW) {
-		puts("\n\nPrzekorczono dozwolona ilosc kontaktow!");
-		return;
+	odczytZPliku();
+	if ((ID) % 5 == 0)
+	{
+		Kontakty* nowaTablica = (Kontakty*)realloc(kontakty, sizeof(Kontakty) * (ID + 8));
+		kontakty = nowaTablica;
 	}
-
 	char im[MAX_DLUGOSC], nazw[MAX_DLUGOSC], ul[MAX_DLUGOSC], dom[MAX_DLUGOSC], mieszk[MAX_DLUGOSC], poczt[MAX_DLUGOSC],
 		miast[MAX_DLUGOSC], tel[MAX_DLUGOSC_TELEFON], zaptel[MAX_DLUGOSC_TELEFON];
 	int wi;
@@ -186,13 +187,13 @@ void dodajKontakt()
 	do
 	{
 		printf("\nNr telefonu: "); scanf("%s", pomocniczaTelefon);
-		printf("\nZapasowy nr telefonu: "); scanf("%s", pomocniczaZapasowyTelefon);	
+		printf("\nZapasowy nr telefonu: "); scanf("%s", pomocniczaZapasowyTelefon);
 
-	} while (strlen(pomocniczaTelefon) >=12 || strlen(pomocniczaZapasowyTelefon)  >= 12);
+	} while (strlen(pomocniczaTelefon) >= 12 || strlen(pomocniczaZapasowyTelefon) >= 12);
 
 	strncpy(tel, pomocniczaTelefon, MAX_DLUGOSC_TELEFON);
 	strncpy(zaptel, pomocniczaZapasowyTelefon, MAX_DLUGOSC_TELEFON);
-	
+
 	nowy_kontakt(wi, im, nazw, ul, dom, mieszk, poczt, miast, tel, zaptel);
 }
 
@@ -206,15 +207,30 @@ void odczytZPliku()
 		printf("\nBlad otwarcia pliku!");
 		return;
 	}
-
+	
+			
 	//odczytujemy najwyzsze id z pliku
 	int id = 0;
 	char linia[100];
 	while (fgets(linia, sizeof(linia), plik) != NULL) {
-		if (sscanf(linia, "ID: %d", &id) == 1) 
+		if (sscanf(linia, "ID: %d", &id) == 1)
 			id++;
 	}
 	ID = id;
+
+	int c = 0;
+	while (c <= ID-1)
+	{
+		c += 4;
+		Kontakty* nowaTablica = (Kontakty*)realloc(kontakty, sizeof(Kontakty) * (c + 1));
+		if (nowaTablica == NULL) {
+			puts("Blad reallokacji pamieci linia 229");
+			return;
+		}
+		else
+		kontakty = nowaTablica;
+		
+	}
 
 	rewind(plik);
 	int iplikPobierz = 0;
@@ -231,12 +247,12 @@ void odczytZPliku()
 	int ipomDoWskaznikow = 0;
 
 	//ustawianie wskaznikow 
-	while (ipomDoWskaznikow < ID -1)
+	while (ipomDoWskaznikow < ID - 1)
 	{
 		kontakty[ipomDoWskaznikow].next = &kontakty[ipomDoWskaznikow + 1];
 		ipomDoWskaznikow++;
 	}
-	
+
 	/*puts("\n\n\n\n");
 	for (int i = 0; i < ID ; i++)
 		printf("\n%p", kontakty[i].next)*/;
@@ -296,7 +312,7 @@ void edytujKontakt()
 	{
 		printf("\nNowy Nr telefonu: "); scanf("%s", pomocniczaTelefon);
 		printf("\nNowy Zapasowy nr telefonu: "); scanf("%s", pomocniczaZapasowyTelefon);
-	} while (strlen(pomocniczaTelefon) != 9 || strlen(pomocniczaZapasowyTelefon) != 9);
+	} while (strlen(pomocniczaTelefon) >12 || strlen(pomocniczaZapasowyTelefon) >12);
 
 	strncpy(kontakty[zmien].nr_telefonu, pomocniczaTelefon, MAX_DLUGOSC_TELEFON);
 	strncpy(kontakty[zmien].zapasowy_nr_telefonu, pomocniczaZapasowyTelefon, MAX_DLUGOSC_TELEFON);
@@ -360,7 +376,7 @@ void wyswietlOd_konkretnegoID()
 
 //Wybieramy po czym chcemy sortowac i wywolujemy funkcje z odpowiednim argumentem
 void sort()
-{						
+{
 	int wybor, rosnaco;
 
 	printf("\nPodaj wedlug ktorego pola chcesz sortowac: \n");
@@ -447,22 +463,22 @@ void sort()
 
 
 //Swapujemy struktury ze soba
-//void swapK(Kontakty* A, Kontakty* B)
-//{
-//	Kontakty tmpkontakt = *A;
-//	*A = *B;
-//	*B = tmpkontakt;
-//
-//	int tmpID = A->id;
-//	A->id = B->id;
-//	B->id = tmpID;
-//	save_to_file_all();
-//}
+void swapK(Kontakty* A, Kontakty* B)
+{
+	Kontakty tmpkontakt = *A;
+	*A = *B;
+	*B = tmpkontakt;
+
+	int tmpID = A->id;
+	A->id = B->id;
+	B->id = tmpID;
+	save_to_file_all();
+}
 
 //Ponizej funkcje porownujace pojedyncze dane ze struktur
 short porownanieWiek(Kontakty* A, Kontakty* B, int rosnaco)
 {
-	if (A->wiek > B->wiek  && (rosnaco == 1))
+	if (A->wiek > B->wiek && (rosnaco == 1))
 		return 1;
 	else if (A->wiek < B->wiek && (rosnaco == 0))
 		return 0;
@@ -476,7 +492,7 @@ short porownanieImie(Kontakty* A, Kontakty* B, int rosnaco)
 		return 1;
 	else if (strcmp(A->imie, B->imie) < 0 && (rosnaco == 0))
 		return 0;
-	
+
 	return -1;
 }
 
@@ -569,8 +585,8 @@ void bobmbelekSort(short(*porownanie)(Kontakty*, Kontakty*, int), int rosnaco)
 			if (porownanie(&kontakty[i], &kontakty[i + 1], rosnaco) == 1 || porownanie(&kontakty[i], &kontakty[i + 1], rosnaco) == 0)
 			{
 				swapped = true;
-				//swapK(&kontakty[i], &kontakty[i + 1]);
-				SWAP_K(&kontakty[i], &kontakty[i + 1]);
+				swapK(&kontakty[i], &kontakty[i + 1]);
+				//SWAP_K(&kontakty[i], &kontakty[i + 1]);
 			}
 		}
 		if (!swapped)
@@ -582,7 +598,7 @@ void mainSort(int rosnaco, char* pole)
 {
 	short ipole;
 	//Nie moza zrobic switcha na char * dlatego trzeba tak zrobic
-	     if (strcmp(pole, "wiek") == 0)
+	if (strcmp(pole, "wiek") == 0)
 		ipole = 0;
 	else if (strcmp(pole, "imie") == 0)
 		ipole = 1;
@@ -606,9 +622,9 @@ void mainSort(int rosnaco, char* pole)
 	switch (ipole)
 	{
 	case 0:
-		bobmbelekSort(porownanieWiek, rosnaco); break;		
+		bobmbelekSort(porownanieWiek, rosnaco); break;
 	case 1:
-		bobmbelekSort(porownanieImie, rosnaco); break;	
+		bobmbelekSort(porownanieImie, rosnaco); break;
 	case 2:
 		bobmbelekSort(porownanieNazwisko, rosnaco);	break;
 	case 3:
