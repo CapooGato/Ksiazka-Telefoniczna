@@ -3,7 +3,6 @@
 #define MAX_DLUGOSC 500
 #define MAX_DLUGOSC_TELEFON 13	//Ostatni znak to \0, w chinach np numery maja 11 cyfr
 
-
 typedef struct {
 	int id, wiek;
 	char imie[MAX_DLUGOSC];
