@@ -12,9 +12,7 @@ void menu()
 {
 	
 	kontakty = (Kontakty*)malloc(sizeof(Kontakty) * 5);
-
 	int wybor;
-
 	do {
 		printf("\n 0 = zakoncz,\n 1 = dodaj nowa osobe do ksiazki telefonicznej,\n 2 = usun kontakt po ID,\n 3 = Edytuj kontakt\n"
 			" 4 = wyswietl dane kontaktu po ID\n 5 = wyswietl od konkretnego ID,\n 6 = Sortowanie \nWybor: ");
@@ -181,7 +179,6 @@ void dodajKontakt()
 	printf("\nNr Poczty: "); scanf("%s", poczt);
 	printf("\nMiasto: "); scanf("%s", miast);
 
-	/*Zakladamy ze numer telefonu moze miec tylko 9 znakow, taka petla byla potrzebna trust me , przy innych nie ma takiej potzeby, bo imie moze byc dowolnie dlugie*/
 	char pomocniczaTelefon[50];
 	char pomocniczaZapasowyTelefon[50];
 	do
