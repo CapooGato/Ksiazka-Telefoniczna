@@ -1,16 +1,27 @@
+/**
+ * @file Lista.c
+ * @brief Implementacja funkcji dla modulu Listy.
+ */
+
 #include "Lista.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 
-//Globalne ID, pomoc do operacji na strukturach
+/**
+ * @brief Zmienna globalna przechowujaca aktualne ID.
+ *
+ * Zmienna jest dostepna z zewnatrz (extern).
+ */
 int ID = 0;
 
-//Menu z wyborem funkcji
+
+/**
+ * @brief Wyswietla menu glowne.
+ */
 void menu()
 {
-	
 	kontakty = (Kontakty*)malloc(sizeof(Kontakty) * 5);
 	int wybor;
 	do {
@@ -49,7 +60,9 @@ void menu()
 	} while (wybor != 0);
 }
 
-//Funkcja która nadpisuje aktualne dane, używana przy np swapowaniu osób w pliku lub przy usuwaniu osoby
+/**
+ * @brief Zapisuje wszystkie kontakty do pliku.
+ */
 void save_to_file_all()
 {
 	//Plik ottwarty w trybie nadpisywania
@@ -62,7 +75,7 @@ void save_to_file_all()
 		return;
 	}
 
-	//Ustawiamy wskaźnik pliku na jego poczatek, jest to potrzebne bo inaczej moze on byc w randomowym miesjcu co prowadzi do niepraawidlowosci
+	//Ustawiamy wskaznik pliku na jego poczatek, jest to potrzebne bo inaczej moze on byc w randomowym miesjcu co prowadzi do niepraawidlowosci
 	rewind(plik);
 
 	//wpisujemy wszystkie osoby do pliku
@@ -76,11 +89,29 @@ void save_to_file_all()
 	fclose(plik);
 }
 
-//Dodajemy nowy kontakt
+/**
+ * @brief Dodaje nowy kontakt.
+ *
+ * @param wiekk                   Wiek kontaktu.
+ * @param imiee                   Imie kontaktu.
+ * @param nazwiskoo               Nazwisko kontaktu.
+ * @param ulicaa                  Ulica kontaktu.
+ * @param nr_domuu                Numer domu kontaktu.
+ * @param nr_mieszkaniaa          Numer mieszkania kontaktu.
+ * @param kod_pocztowyy           Kod pocztowy kontaktu.
+ * @param miastoo                 Miasto kontaktu.
+ * @param nr_telefonuu            Numer telefonu kontaktu.
+ * @param zapasowy_nr_telefonuu   Zapasowy numer telefonu kontaktu.
+ */
 void nowy_kontakt(int wiekk, char* imiee, char* nazwiskoo, char* ulicaa, char* nr_domuu, char* nr_mieszkaniaa, char* kod_pocztowyy,
 	char* miastoo, char* nr_telefonuu, char* zapasowy_nr_telefonuu)
 {
 	odczytZPliku();
+	if ((ID) % 5 == 0)
+	{
+		Kontakty* nowaTablica = (Kontakty*)realloc(kontakty, sizeof(Kontakty) * (ID + 8));
+		kontakty = nowaTablica;
+	}
 	FILE* plik;
 	plik = fopen("Kontakty.txt", "a+");
 	kontakty[ID].id = ID;
@@ -124,9 +155,15 @@ void nowy_kontakt(int wiekk, char* imiee, char* nazwiskoo, char* ulicaa, char* n
 }
 
 
-
+/**
+ * @brief Usuwa kontakt.
+ *
+ * Funkcja remove_contact() sluzy do usuwania kontaktu z systemu.
+ * Po wywolaniu tej funkcji, kontakt zostanie trwale usuniety z systemu.
+ */
 void remove_contact()
 {
+	odczytZPliku();
 	//Jesli ID jest mniejsze od 0 to znaczy ze plik jest pusty
 	if (ID < 0)
 	{
@@ -159,14 +196,17 @@ void remove_contact()
 	save_to_file_all();
 }
 
+/**
+ * @brief Dodaje nowy kontakt.
+ *
+ * Funkcja dodajKontakt() sluzy do dodawania nowego kontaktu do systemu.
+ * Po wywolaniu tej funkcji, uzytkownik bedzie mogl wprowadzic dane nowego kontaktu,
+ * ktore zostana zapisane w systemie.
+ */
 void dodajKontakt()
 {
 	odczytZPliku();
-	if ((ID) % 5 == 0)
-	{
-		Kontakty* nowaTablica = (Kontakty*)realloc(kontakty, sizeof(Kontakty) * (ID + 8));
-		kontakty = nowaTablica;
-	}
+	
 	char im[MAX_DLUGOSC], nazw[MAX_DLUGOSC], ul[MAX_DLUGOSC], dom[MAX_DLUGOSC], mieszk[MAX_DLUGOSC], poczt[MAX_DLUGOSC],
 		miast[MAX_DLUGOSC], tel[MAX_DLUGOSC_TELEFON], zaptel[MAX_DLUGOSC_TELEFON];
 	int wi;
@@ -194,7 +234,13 @@ void dodajKontakt()
 	nowy_kontakt(wi, im, nazw, ul, dom, mieszk, poczt, miast, tel, zaptel);
 }
 
-//Zczytuje dane przy z pliku i umieszcza je w strukturach
+/**
+ * @brief Odczytuje dane z pliku.
+ *
+ * Funkcja odczytZPliku() sluzy do odczytywania danych kontaktow z pliku.
+ * Po wywolaniu tej funkcji, system odczyta dane z pliku i umozliwi dostep
+ * do nich w celu wyswietlenia, edycji lub innych operacji.
+ */
 void odczytZPliku()
 {
 	FILE* plik;
@@ -225,8 +271,7 @@ void odczytZPliku()
 			return;
 		}
 		else
-		kontakty = nowaTablica;
-		
+		kontakty = nowaTablica;	
 	}
 
 	rewind(plik);
@@ -256,6 +301,13 @@ void odczytZPliku()
 	fclose(plik);
 }
 
+/**
+ * @brief Edytuje istniejacy kontakt.
+ *
+ * Funkcja edytujKontakt() umozliwia uzytkownikowi edycje danych istniejacego kontaktu.
+ * Po wywolaniu tej funkcji, uzytkownik bedzie mogl wprowadzic nowe dane dla wybranego kontaktu,
+ * ktore zostana zaktualizowane w systemie.
+ */
 void edytujKontakt()
 {
 	odczytZPliku();
@@ -318,6 +370,13 @@ void edytujKontakt()
 	save_to_file_all();
 }
 
+/**
+ * @brief Wyswietla dane kontaktu.
+ *
+ * Funkcja wyswietlKontakt() sluzy do wyswietlania danych konkretnego kontaktu.
+ * Po wywolaniu tej funkcji, system wyswietli informacje o danym kontakcie,
+ * takie jak imie, nazwisko, numer telefonu itp.
+ */
 void wyswietlKontakt()
 {
 	odczytZPliku();
@@ -343,6 +402,14 @@ void wyswietlKontakt()
 		, kontakty[idDoWyswietlenia].miasto, kontakty[idDoWyswietlenia].nr_telefonu, kontakty[idDoWyswietlenia].zapasowy_nr_telefonu);
 }
 
+/**
+ * @brief Wyswietla dane kontaktu na podstawie konkretnego identyfikatora.
+ *
+ * Funkcja wyswietlOd_konkretnegoID() umozliwia wyswietlenie danych kontaktu
+ * na podstawie podanego identyfikatora. Po wywolaniu tej funkcji, system
+ * wyszuka kontakt o podanym identyfikatorze i wyswietli jego informacje 
+ o wszystkich kontaktach zaczynajac od podanego.
+ */
 void wyswietlOd_konkretnegoID()
 {
 	odczytZPliku();
@@ -371,7 +438,13 @@ void wyswietlOd_konkretnegoID()
 	}
 }
 
-//Wybieramy po czym chcemy sortowac i wywolujemy funkcje z odpowiednim argumentem
+/**
+ * @brief Funckja do sortowania
+ *
+ * Funkcja ktora wowluje funkcje mainSort
+ * w instrukcji switch, z opowiednimi parametrami
+ *
+ */
 void sort()
 {
 	int wybor, rosnaco;
@@ -459,7 +532,18 @@ void sort()
 }
 
 
-//Swapujemy struktury ze soba
+/**
+ * @brief Zamienia dwa obiekty typu Kontakty miejscami.
+ *
+ * Funkcja swapK() sluzy do zamiany miejscami dwoch obiektow typu Kontakty.
+ * Przyjmuje wskazniki A i B do dwoch obiektow, a nastepnie zamienia je miejscami.
+ * Po wykonaniu funkcji, obiekt wskazywany przez A bedzie znajdowac sie pod adresem,
+ * ktory wczesniej wskazywal B, a obiekt wskazywany przez B bedzie znajdowac sie
+ * pod adresem, ktory wczesniej wskazywal A.
+ *
+ * @param A Wskaznik do pierwszego obiektu typu Kontakty.
+ * @param B Wskaznik do drugiego obiektu typu Kontakty.
+ */
 void swapK(Kontakty* A, Kontakty* B)
 {
 	Kontakty tmpkontakt = *A;
@@ -472,7 +556,26 @@ void swapK(Kontakty* A, Kontakty* B)
 	save_to_file_all();
 }
 
-//Ponizej funkcje porownujace pojedyncze dane ze struktur
+/**
+* @brief Funkcje do porownywania ze soba pol w strukturze Kontakty
+*
+* Funkcje zwracaja short, a nie bool poniewaz musza obslugiwac 3 rozne przypadki
+*
+*/
+/**
+ * @defgroup Porownania Porownania kontaktow
+ * @{
+ */
+
+ /**
+  * @brief Porownuje kontakty na podstawie wieku.
+  *
+  * @param A       Wskaznik do pierwszego obiektu typu Kontakty.
+  * @param B       Wskaznik do drugiego obiektu typu Kontakty.
+  * @param rosnaco Flaga okreslajaca porzadek rosnacy (1) lub malejacy (0).
+  *
+  * @return Wartosc zwracana zalezna od wyniku porownania.
+  */
 short porownanieWiek(Kontakty* A, Kontakty* B, int rosnaco)
 {
 	if (A->wiek > B->wiek && (rosnaco == 1))
@@ -482,7 +585,15 @@ short porownanieWiek(Kontakty* A, Kontakty* B, int rosnaco)
 
 	return -1;
 }
-
+/**
+ * @brief Porownuje kontakty na podstawie imienia.
+ *
+ * @param A       Wskaznik do pierwszego obiektu typu Kontakty.
+ * @param B       Wskaznik do drugiego obiektu typu Kontakty.
+ * @param rosnaco Flaga okreslajaca porzadek rosnacy (1) lub malejacy (0).
+ *
+ * @return Wartosc zwracana zalezna od wyniku porownania.
+ */
 short porownanieImie(Kontakty* A, Kontakty* B, int rosnaco)
 {
 	if (strcmp(A->imie, B->imie) > 0 && (rosnaco == 1))
@@ -492,7 +603,15 @@ short porownanieImie(Kontakty* A, Kontakty* B, int rosnaco)
 
 	return -1;
 }
-
+/**
+ * @brief Porownuje kontakty na podstawie nazwiska.
+ *
+ * @param A       Wskaznik do pierwszego obiektu typu Kontakty.
+ * @param B       Wskaznik do drugiego obiektu typu Kontakty.
+ * @param rosnaco Flaga okreslajaca porzadek rosnacy (1) lub malejacy (0).
+ *
+ * @return Wartosc zwracana zalezna od wyniku porownania.
+ */
 short porownanieNazwisko(Kontakty* A, Kontakty* B, int rosnaco)
 {
 	if (strcmp(A->nazwisko, B->nazwisko) > 0 && (rosnaco == 1))
@@ -500,6 +619,15 @@ short porownanieNazwisko(Kontakty* A, Kontakty* B, int rosnaco)
 	else if (strcmp(A->nazwisko, B->nazwisko) < 0 && (rosnaco == 0))
 		return 0;
 }
+/**
+ * @brief Porownuje kontakty na podstawie ulicy.
+ *
+ * @param A       Wskaznik do pierwszego obiektu typu Kontakty.
+ * @param B       Wskaznik do drugiego obiektu typu Kontakty.
+ * @param rosnaco Flaga okreslajaca porzadek rosnacy (1) lub malejacy (0).
+ *
+ * @return Wartosc zwracana zalezna od wyniku porownania.
+ */
 short porownanieUlica(Kontakty* A, Kontakty* B, int rosnaco)
 {
 	if (strcmp(A->ulica, B->ulica) > 0 && (rosnaco == 1))
@@ -509,6 +637,15 @@ short porownanieUlica(Kontakty* A, Kontakty* B, int rosnaco)
 
 	return -1;
 }
+/**
+ * @brief Porownuje kontakty na podstawie numeru domu.
+ *
+ * @param A       Wskaznik do pierwszego obiektu typu Kontakty.
+ * @param B       Wskaznik do drugiego obiektu typu Kontakty.
+ * @param rosnaco Flaga okreslajaca porzadek rosnacy (1) lub malejacy (0).
+ *
+ * @return Wartosc zwracana zalezna od wyniku porownania.
+ */
 short porownanieNr_domu(Kontakty* A, Kontakty* B, int rosnaco)
 {
 	if (strcmp(A->nr_domu, B->nr_domu) > 0 && (rosnaco == 1))
@@ -519,6 +656,15 @@ short porownanieNr_domu(Kontakty* A, Kontakty* B, int rosnaco)
 	return -1;
 }
 
+/**
+ * @brief Porownuje kontakty na podstawie numeru mieszkania.
+ *
+ * @param A       Wskaznik do pierwszego obiektu typu Kontakty.
+ * @param B       Wskaznik do drugiego obiektu typu Kontakty.
+ * @param rosnaco Flaga okreslajaca porzadek rosnacy (1) lub malejacy (0).
+ *
+ * @return Wartosc zwracana zalezna od wyniku porownania.
+ */
 short porownanieNr_mieszkania(Kontakty* A, Kontakty* B, int rosnaco)
 {
 	if (strcmp(A->nr_mieszkania, B->nr_mieszkania) > 0 && (rosnaco == 1))
@@ -528,7 +674,15 @@ short porownanieNr_mieszkania(Kontakty* A, Kontakty* B, int rosnaco)
 
 	return -1;
 }
-
+/**
+ * @brief Porownuje kontakty na podstawie kodu pocztowego.
+ *
+ * @param A       Wskaznik do pierwszego obiektu typu Kontakty.
+ * @param B       Wskaznik do drugiego obiektu typu Kontakty.
+ * @param rosnaco Flaga okreslajaca porzadek rosnacy (1) lub malejacy (0).
+ *
+ * @return Wartosc zwracana zalezna od wyniku porownania.
+ */
 short porownanieKod_pocztowy(Kontakty* A, Kontakty* B, int rosnaco)
 {
 	if (strcmp(A->kod_pocztowy, B->kod_pocztowy) > 0 && (rosnaco == 1))
@@ -538,7 +692,15 @@ short porownanieKod_pocztowy(Kontakty* A, Kontakty* B, int rosnaco)
 
 	return -1;
 }
-
+/**
+ * @brief Porownuje kontakty na podstawie miasta.
+ *
+ * @param A       Wskaznik do pierwszego obiektu typu Kontakty.
+ * @param B       Wskaznik do drugiego obiektu typu Kontakty.
+ * @param rosnaco Flaga okreslajaca porzadek rosnacy (1) lub malejacy (0).
+ *
+ * @return Wartosc zwracana zalezna od wyniku porownania.
+ */
 short porownanieMiasto(Kontakty* A, Kontakty* B, int rosnaco)
 {
 	if (strcmp(A->miasto, B->miasto) > 0 && (rosnaco == 1))
@@ -548,7 +710,15 @@ short porownanieMiasto(Kontakty* A, Kontakty* B, int rosnaco)
 
 	return -1;
 }
-
+/**
+ * @brief Porownuje kontakty na podstawie numeru telefonu.
+ *
+ * @param A       Wskaznik do pierwszego obiektu typu Kontakty.
+ * @param B       Wskaznik do drugiego obiektu typu Kontakty.
+ * @param rosnaco Flaga okreslajaca porzadek rosnacy (1) lub malejacy (0).
+ *
+ * @return Wartosc zwracana zalezna od wyniku porownania.
+ */
 short porownanieNr_telefonu(Kontakty* A, Kontakty* B, int rosnaco)
 {
 	if (strcmp(A->nr_telefonu, B->nr_telefonu) > 0 && (rosnaco == 1))
@@ -558,7 +728,15 @@ short porownanieNr_telefonu(Kontakty* A, Kontakty* B, int rosnaco)
 
 	return -1;
 }
-
+/**
+ * @brief Porownuje kontakty na podstawie numeru telefonu zapasowego.
+ *
+ * @param A       Wskaznik do pierwszego obiektu typu Kontakty.
+ * @param B       Wskaznik do drugiego obiektu typu Kontakty.
+ * @param rosnaco Flaga okreslajaca porzadek rosnacy (1) lub malejacy (0).
+ *
+ * @return Wartosc zwracana zalezna od wyniku porownania.
+ */
 short porownanieZapasowy_nr_telefonu(Kontakty* A, Kontakty* B, int rosnaco)
 {
 	if (strcmp(A->zapasowy_nr_telefonu, B->zapasowy_nr_telefonu) > 0 && (rosnaco == 1))
@@ -569,6 +747,25 @@ short porownanieZapasowy_nr_telefonu(Kontakty* A, Kontakty* B, int rosnaco)
 	return -1;
 }
 
+/**
+ * @}
+ */
+
+/**
+ * \brief Sortuje tablice obiektow typu Kontakty przy uzyciu okreslonej funkcji porownujacej.
+ *
+ * Ta funkcja sortuje tablice obiektow typu Kontakty w porzadku rosnacym lub malejacym,
+ * w zaleznosci od dostarczonej funkcji porownujacej.
+ *
+ * \param porownanie Wskaznik na funkcje porownujaca, ktora okresla kolejnosc obiektow.
+ *                   Funkcja porownujaca powinna miec sygnature:
+ *                   short porownanie(Kontakty* obj1, Kontakty* obj2, int rosnaco)
+ *                   gdzie `obj1` i `obj2` sa wskaznikami na obiekty typu Kontakty, a `rosnaco`
+ *                   okresla kolejnosc sortowania (0 dla malejacego, wartosc rozna od zera dla rosnacego).
+ *
+ * \param rosnaco Okresla kolejnosc sortowania. Jesli `rosnaco` nie jest zerem, tablica zostanie posortowana
+ *                w porzadku rosnacym; w przeciwnym razie zostanie posortowana w porzadku malejacym.
+ */
 void bobmbelekSort(short(*porownanie)(Kontakty*, Kontakty*, int), int rosnaco)
 {
 	odczytZPliku();
@@ -583,7 +780,6 @@ void bobmbelekSort(short(*porownanie)(Kontakty*, Kontakty*, int), int rosnaco)
 			{
 				swapped = true;
 				swapK(&kontakty[i], &kontakty[i + 1]);
-				//SWAP_K(&kontakty[i], &kontakty[i + 1]);
 			}
 		}
 		if (!swapped)
@@ -591,6 +787,13 @@ void bobmbelekSort(short(*porownanie)(Kontakty*, Kontakty*, int), int rosnaco)
 	}
 }
 
+/**
+ * @brief Funckja do sortowania
+ *
+ * Funkcja ktora wywoluje w switch() sortowanie po polu wybranym przez
+ * uzytkownika
+ *
+ */
 void mainSort(int rosnaco, char* pole)
 {
 	short ipole;
