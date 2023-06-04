@@ -1,24 +1,330 @@
 ID: 0 
- 20, C Kawecki 
+ 20, Seweryn Kawecki 
  Fajna 62B 0 
- 26-065 Pieksozow 
+ 26-065 Kielce 
  999888111 111000222 
 
 ID: 1 
- 20, Kapitan Tytus 
- Nie_Fajna 62B 0 
- 26-065 Pieksozow 
- 222333444 555666777 
-
-ID: 2 
- 19, D Karwat 
+ 19, Damian Karwat 
  Fajna 62B 0 
- 26-065 Pieksozow 
+ 26-065 Kielce 
  888111444 111000222 
 
-ID: 3 
- 19, A Gesler 
+ID: 2 
+ 20, Seweryn Kawecki 
  Fajna 62B 0 
- 26-065 Pieksozow 
+ 26-065 Kielce 
+ 999888111 111000222 
+
+ID: 3 
+ 19, Magda Gesler 
+ Fajna 62B 0 
+ 26-065 Pozan 
  999111888 000999888 
+
+ID: 4 
+ 20, Kapitan Tytus 
+ Nie_Fajna 62B 0 
+ 26-065 Cihocinek 
+ 222333444 555666777 
+
+ID: 5 
+ 19, Damian Karwat 
+ Fajna 62B 0 
+ 26-065 Kielce 
+ 888111444 111000222 
+
+ID: 6 
+ 20, Seweryn Kawecki 
+ Fajna 37C 0 
+ 26-065 Kielce 
+ 999888111 111000222 
+
+ID: 7 
+ 19, Magda Gesler 
+ Fajna 12 0 
+ 26-065 Pozan 
+ 999111888 444444444 
+
+ID: 8 
+ 20, Kapitan Tytus 
+ Nie_Fajna 82 3 
+ 26-065 Cihocinek 
+ 222333444 555666777 
+
+ID: 9 
+ 90, Andrzej Jahas 
+ Beczkowa 86C 0 
+ 26-065 Gniezno 
+ 123213123 12121111 
+
+ID: 10 
+ 19, Damian Karwat 
+ Fajna 62B 0 
+ 26-065 Kielce 
+ 888111444 111000222 
+
+ID: 11 
+ 20, Seweryn Kawecki 
+ Fajna 37C 0 
+ 26-065 Kielce 
+ 999888111 111000222 
+
+ID: 12 
+ 19, Magda Gesler 
+ Fajna 12 0 
+ 26-065 Pozan 
+ 999111888 444444444 
+
+ID: 13 
+ 20, Kapitan Tytus 
+ Nie_Fajna 82 3 
+ 26-065 Cihocinek 
+ 222333444 555666777 
+
+ID: 14 
+ 90, Andrzej Jahas 
+ Beczkowa 86C 0 
+ 26-065 Gniezno 
+ 123213123 12121111 
+
+ID: 15 
+ 19, Damian Karwat 
+ Fajna 62B 0 
+ 26-065 Kielce 
+ 888111444 111000222 
+
+ID: 16 
+ 20, Seweryn Kawecki 
+ Fajna 37C 0 
+ 26-065 Kielce 
+ 999888111 111000222 
+
+ID: 17 
+ 19, Magda Gesler 
+ Fajna 12 0 
+ 26-065 Pozan 
+ 999111888 444444444 
+
+ID: 18 
+ 20, Kapitan Tytus 
+ Nie_Fajna 82 3 
+ 26-065 Cihocinek 
+ 222333444 555666777 
+
+ID: 19 
+ 90, Andrzej Jahas 
+ Beczkowa 86C 0 
+ 26-065 Gniezno 
+ 123213123 12121111 
+
+ID: 20 
+ 19, Damian Karwat 
+ Fajna 62B 0 
+ 26-065 Kielce 
+ 888111444 111000222 
+
+ID: 21 
+ 20, Seweryn Kawecki 
+ Fajna 37C 0 
+ 26-065 Kielce 
+ 999888111 111000222 
+
+ID: 22 
+ 19, Magda Gesler 
+ Fajna 12 0 
+ 26-065 Pozan 
+ 999111888 444444444 
+
+ID: 23 
+ 20, Kapitan Tytus 
+ Nie_Fajna 82 3 
+ 26-065 Cihocinek 
+ 222333444 555666777 
+
+ID: 24 
+ 90, Andrzej Jahas 
+ Beczkowa 86C 0 
+ 26-065 Gniezno 
+ 123213123 12121111 
+
+ID: 25 
+ 19, Damian Karwat 
+ Fajna 62B 0 
+ 26-065 Kielce 
+ 888111444 111000222 
+
+ID: 26 
+ 20, Seweryn Kawecki 
+ Fajna 37C 0 
+ 26-065 Kielce 
+ 999888111 111000222 
+
+ID: 27 
+ 19, Magda Gesler 
+ Fajna 12 0 
+ 26-065 Pozan 
+ 999111888 444444444 
+
+ID: 28 
+ 20, Kapitan Tytus 
+ Nie_Fajna 82 3 
+ 26-065 Cihocinek 
+ 222333444 555666777 
+
+ID: 29 
+ 90, Andrzej Jahas 
+ Beczkowa 86C 0 
+ 26-065 Gniezno 
+ 123213123 12121111 
+
+ID: 30 
+ 19, Damian Karwat 
+ Fajna 62B 0 
+ 26-065 Kielce 
+ 888111444 111000222 
+
+ID: 31 
+ 20, Seweryn Kawecki 
+ Fajna 37C 0 
+ 26-065 Kielce 
+ 999888111 111000222 
+
+ID: 32 
+ 19, Magda Gesler 
+ Fajna 12 0 
+ 26-065 Pozan 
+ 999111888 444444444 
+
+ID: 33 
+ 20, Kapitan Tytus 
+ Nie_Fajna 82 3 
+ 26-065 Cihocinek 
+ 222333444 555666777 
+
+ID: 34 
+ 90, Andrzej Jahas 
+ Beczkowa 86C 0 
+ 26-065 Gniezno 
+ 123213123 12121111 
+
+ID: 35 
+ 19, Damian Karwat 
+ Fajna 62B 0 
+ 26-065 Kielce 
+ 888111444 111000222 
+
+ID: 36 
+ 20, Seweryn Kawecki 
+ Fajna 37C 0 
+ 26-065 Kielce 
+ 999888111 111000222 
+
+ID: 37 
+ 19, Magda Gesler 
+ Fajna 12 0 
+ 26-065 Pozan 
+ 999111888 444444444 
+
+ID: 38 
+ 20, Kapitan Tytus 
+ Nie_Fajna 82 3 
+ 26-065 Cihocinek 
+ 222333444 555666777 
+
+ID: 39 
+ 90, Andrzej Jahas 
+ Beczkowa 86C 0 
+ 26-065 Gniezno 
+ 123213123 12121111 
+
+ID: 40 
+ 19, Damian Karwat 
+ Fajna 62B 0 
+ 26-065 Kielce 
+ 888111444 111000222 
+
+ID: 41 
+ 20, Seweryn Kawecki 
+ Fajna 37C 0 
+ 26-065 Kielce 
+ 999888111 111000222 
+
+ID: 42 
+ 19, Magda Gesler 
+ Fajna 12 0 
+ 26-065 Pozan 
+ 999111888 444444444 
+
+ID: 43 
+ 20, Kapitan Tytus 
+ Nie_Fajna 82 3 
+ 26-065 Cihocinek 
+ 222333444 555666777 
+
+ID: 44 
+ 90, Andrzej Jahas 
+ Beczkowa 86C 0 
+ 26-065 Gniezno 
+ 123213123 12121111 
+
+ID: 45 
+ 19, Damian Karwat 
+ Fajna 62B 0 
+ 26-065 Kielce 
+ 888111444 111000222 
+
+ID: 46 
+ 20, Seweryn Kawecki 
+ Fajna 37C 0 
+ 26-065 Kielce 
+ 999888111 111000222 
+
+ID: 47 
+ 19, Magda Gesler 
+ Fajna 12 0 
+ 26-065 Pozan 
+ 999111888 444444444 
+
+ID: 48 
+ 20, Kapitan Tytus 
+ Nie_Fajna 82 3 
+ 26-065 Cihocinek 
+ 222333444 555666777 
+
+ID: 49 
+ 90, Andrzej Jahas 
+ Beczkowa 86C 0 
+ 26-065 Gniezno 
+ 123213123 12121111 
+
+ID: 50 
+ 19, Damian Karwat 
+ Fajna 62B 0 
+ 26-065 Kielce 
+ 888111444 111000222 
+
+ID: 51 
+ 20, Seweryn Kawecki 
+ Fajna 37C 0 
+ 26-065 Kielce 
+ 999888111 111000222 
+
+ID: 52 
+ 19, Magda Gesler 
+ Fajna 12 0 
+ 26-065 Pozan 
+ 999111888 444444444 
+
+ID: 53 
+ 20, Kapitan Tytus 
+ Nie_Fajna 82 3 
+ 26-065 Cihocinek 
+ 222333444 555666777 
+
+ID: 54 
+ 90, Andrzej Jahas 
+ Beczkowa 86C 0 
+ 26-065 Gniezno 
+ 123213123 12121111 
 
